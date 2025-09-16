@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Queue Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        .ticket-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .counter-active {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-teal-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i data-feather="activity" class="w-8 h-8"></i>
+                    <h1 class="text-2xl font-bold">MediQueue Pro</h1>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#" class="hover:text-teal-200 transition">Dashboard</a>
+                    <a href="#" class="hover:text-teal-200 transition">Counters</a>
+                    <a href="#" class="hover:text-teal-200 transition">Reports</a>
+                    <a href="staff.html" class="hover:text-teal-200 transition">Staff</a>
+                    <a href="#" class="hover:text-teal-200 transition">Settings</a>
+                </nav>
+                <button class="md:hidden">
+                    <i data-feather="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Welcome Section -->
+        <section class="mb-12" data-aos="fade-up">
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="mb-6 md:mb-0">
+                        <h2 class="text-2xl font-bold text-gray-800">Welcome, Bank Manager</h2>
+                        <p class="text-gray-600">Manage your bank's queue efficiently with our system</p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center space-x-2 transition">
+                            <i data-feather="plus" class="w-4 h-4"></i>
+                            <span>New Ticket</span>
+                        </button>
+                        <button class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-2 rounded-lg flex items-center space-x-2 transition">
+                            <i data-feather="refresh-cw" class="w-4 h-4"></i>
+                            <span>Refresh</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Queue Overview -->
+        <section class="mb-12" data-aos="fade-up">
+            <h2 class="text-xl font-semibold text-gray-800 mb-6">Queue Overview</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Waiting Customers -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-700">Waiting Customers</h3>
+                        <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">25</div>
+                    </div>
+                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-blue-600 rounded-full" style="width: 70%"></div>
+                    </div>
+                </div>
+
+                <!-- Average Wait Time -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-700">Average Wait Time</h3>
+                        <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">12 min</div>
+                    </div>
+                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-green-500 rounded-full" style="width: 40%"></div>
+                    </div>
+                </div>
+
+                <!-- Active Counters -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-700">Active Counters</h3>
+                        <div class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">4/6</div>
+                    </div>
+                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-purple-500 rounded-full" style="width: 66%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Current Queue -->
+        <section class="mb-12" data-aos="fade-up">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold text-gray-800">Current Queue</h2>
+                <div class="flex space-x-2">
+                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-1 rounded-lg text-sm transition">
+                        All Services
+                    </button>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded-lg text-sm transition">
+                        Priority
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="grid grid-cols-12 bg-gray-100 p-4 font-medium text-gray-700">
+                    <div class="col-span-1">#</div>
+                    <div class="col-span-3">Ticket Number</div>
+                    <div class="col-span-3">Service Type</div>
+                    <div class="col-span-2">Status</div>
+                    <div class="col-span-2">Wait Time</div>
+                    <div class="col-span-1">Action</div>
+                </div>
+                
+                <!-- Queue Items -->
+                <div class="grid grid-cols-12 p-4 border-b border-gray-200 items-center hover:bg-gray-50 transition">
+                    <div class="col-span-1 font-medium">1</div>
+                    <div class="col-span-3 flex items-center">
+                        <div class="bg-teal-600 text-white px-3 py-1 rounded-lg mr-3 ticket-animation">A102</div>
+                        <span class="text-sm text-gray-500">(Priority)</span>
+                    </div>
+                    <div class="col-span-3">Loan Application</div>
+                    <div class="col-span-2">
+                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">Waiting</span>
+                    </div>
+                    <div class="col-span-2 text-sm text-gray-600">5 min</div>
+                    <div class="col-span-1">
+                        <button class="text-blue-600 hover:text-blue-800">
+                            <i data-feather="more-vertical" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-12 p-4 border-b border-gray-200 items-center hover:bg-gray-50 transition">
+                    <div class="col-span-1 font-medium">2</div>
+                    <div class="col-span-3">
+                        <div class="bg-gray-200 text-gray-800 px-3 py-1 rounded-lg mr-3">B205</div>
+                    </div>
+                    <div class="col-span-3">Deposit</div>
+                    <div class="col-span-2">
+                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">Waiting</span>
+                    </div>
+                    <div class="col-span-2 text-sm text-gray-600">12 min</div>
+                    <div class="col-span-1">
+                        <button class="text-blue-600 hover:text-blue-800">
+                            <i data-feather="more-vertical" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-12 p-4 border-b border-gray-200 items-center hover:bg-gray-50 transition">
+                    <div class="col-span-1 font-medium">3</div>
+                    <div class="col-span-3">
+                        <div class="bg-gray-200 text-gray-800 px-3 py-1 rounded-lg mr-3">C301</div>
+                    </div>
+                    <div class="col-span-3">Withdrawal</div>
+                    <div class="col-span-2">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">In Progress</span>
+                    </div>
+                    <div class="col-span-2 text-sm text-gray-600">8 min</div>
+                    <div class="col-span-1">
+                        <button class="text-blue-600 hover:text-blue-800">
+                            <i data-feather="more-vertical" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Counters Status -->
+        <section data-aos="fade-up">
+            <h2 class="text-xl font-semibold text-gray-800 mb-6">Counters Status</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Counter 1 -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-teal-600 counter-active">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-800">Counter 1</h3>
+                            <p class="text-sm text-gray-500">Loan Services</p>
+                        </div>
+                        <div class="bg-teal-600 text-white px-2 py-1 rounded-full text-xs">Active</div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600">Current Ticket</p>
+                            <p class="text-xl font-bold">A102</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Wait Time</p>
+                            <p class="text-xl font-bold">8 min</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Counter 2 -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-green-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-800">Counter 2</h3>
+                            <p class="text-sm text-gray-500">Deposits</p>
+                        </div>
+                        <div class="bg-green-500 text-white px-2 py-1 rounded-full text-xs">Available</div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600">Current Ticket</p>
+                            <p class="text-xl font-bold">-</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Wait Time</p>
+                            <p class="text-xl font-bold">0 min</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Counter 3 -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-red-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-800">Counter 3</h3>
+                            <p class="text-sm text-gray-500">Withdrawals</p>
+                        </div>
+                        <div class="bg-red-500 text-white px-2 py-1 rounded-full text-xs">Closed</div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600">Current Ticket</p>
+                            <p class="text-xl font-bold">-</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Wait Time</p>
+                            <p class="text-xl font-bold">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 mt-12 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-gray-600">&copy; 2023 BankQueue Pro. All rights reserved.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-600 hover:text-blue-600 transition">
+                        <i data-feather="help-circle" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-blue-600 transition">
+                        <i data-feather="settings" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-blue-600 transition">
+                        <i data-feather="mail" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        feather.replace();
+    </script>
+</body>
+</html>
